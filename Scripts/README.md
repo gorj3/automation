@@ -1,9 +1,6 @@
 # scripts
 Scripts in Bash, Python and PowerShell.
-Download the scripts and make them executable
-```
-chmod +x create_windows_instance.py
-```
+
 **create_windos_instance.py**
 * Creates an AWS EC2 Windows instance
 * Waits 5 minutes to decrypt the password
@@ -22,3 +19,13 @@ chmod +x create_windows_instance.py
 - Two parts PowerShell script
   - First part downloads software, sets up WSL and ask to restart the PC
   - Second part updates the WSL kernel and finishes configuration
+
+### Instructions
+Python and Bash scripts need to be executables
+```
+chmod +x create_windows_instance.py
+```
+PowerShell scripts need to be run like this
+```
+chmod +x create_windows_instance.py
+```
