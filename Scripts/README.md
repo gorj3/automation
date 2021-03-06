@@ -7,8 +7,15 @@ Scripts in Bash, Python and PowerShell.
 * Returns DNS address, Admin and password
 
 **ubuntu_setup.py**
+* Updates and upgrades packages
+* Install selected software
+* Logs output to a log file
 
 **ubuntu_setup.sh**
+* Accomplishes the same than ubuntu_setup.py but in Bash
+* Doesn't log to a file, but displays output to terminal
 
-windows10_setup.ps1
-
+**windows10_setup.ps1**
+- Two parts PowerShell script
+  - First part downloads software, sets up WSL and ask to restart the PC
+  - Second part updates the WSL kernel and finishes configuration
