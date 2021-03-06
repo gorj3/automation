@@ -1,8 +1,11 @@
 # scripts
 Scripts in Bash, Python and PowerShell.
-
+Download the scripts and make them executable
+```
+chmod +x create_windows_instance.py
+```
 **create_windos_instance.py**
-* Creates an AWS EC2 with Windows Server 2019
+* Creates an AWS EC2 Windows instance
 * Waits 5 minutes to decrypt the password
 * Returns DNS address, Admin and password
 
