@@ -25,7 +25,7 @@ Python and Bash scripts need to be executables
 ```
 chmod +x create_windows_instance.py
 ```
-PowerShell scripts need to be run like this
+PowerShell scripts need bypass the execution policy, like this
 ```
 powershell -ExecutionPolicy Bypass -File windows10_setup.ps1
 ```
