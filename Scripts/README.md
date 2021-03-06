@@ -27,5 +27,5 @@ chmod +x create_windows_instance.py
 ```
 PowerShell scripts need to be run like this
 ```
-chmod +x create_windows_instance.py
+powershell -ExecutionPolicy Bypass -File windows10_setup.ps1
 ```
