@@ -4,7 +4,7 @@ Write-Host @"
 Welcome to Windows 10 dev workstation set up.
 This installation has two parts:
 1. Download installation files, make WSL configurations and restart the PC
-2. Install some files and finish configuration
+2. Install WSL files and set up Ansible
 Please select the part that you need.
 "@
 
@@ -15,7 +15,7 @@ function Invoke-Part-One {
     Write-Host "Download WSL2 Kernel, Docker, GitHub Desktop, Git and Visual Studio Code?"
     $DownloadTools = Read-Host -Prompt 'The download links will be open in Chrome for faster speed [y/n]'
 
-    if ( $DownloadTools -eq 'y' -or $age -eq 'Y' )
+    if ( $DownloadTools -eq 'y' -or $DownloadTools -eq 'Y' )
     {
         Start-Process "chrome.exe" "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
         Start-Process "chrome.exe" "https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe"
@@ -27,7 +27,7 @@ function Invoke-Part-One {
         Write-Host "The configuration has been completed. The PC needs to restart before installing the WSL2 update."
         Write-Host "Do you want to restart now? Some files might still be downloading"
         $RestartPC = Read-Host -Prompt '[y/n]'
-        if ( $RestartPC -eq 'y' -or $age -eq 'Y' )
+        if ( $RestartPC -eq 'y' -or $DownloadTools -eq 'Y' )
         {
             Restart-Computer -Force
         }
@@ -40,21 +40,26 @@ function Invoke-Part-Two {
     Start-Process "$home\Downloads\wsl_update_x64.msi" /passive
     wsl --set-default-version 2
 
-    #configure Ansible
-    $url = "https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1"
-    $file = "C:\Users\Jorge\Downloads\Upgrade-PowerShell.ps1"
-    (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
-    &$file -Version 5.1
+    $AnsibleInstall = Read-Host -Prompt 'Do you want to configure Ansible?: [y/n] '
+    if ( $AnsibleInstall -eq 'y' -or $AnsibleInstall -eq 'Y' )
+    {
+        #configure Ansible
+        $url = "https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1"
+        $file = "C:\Users\Jorge\Downloads\Upgrade-PowerShell.ps1"
+        (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+        &$file -Version 5.1
 
-    $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
-    $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+        $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+        $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
 
-    (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
-    powershell.exe -ExecutionPolicy ByPass -File $file
+        (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+        powershell.exe -ExecutionPolicy ByPass -File $file
 
-    $Password = Read-Host -Prompt 'Write password for Ansible account: ' -AsSecureString 
-    New-LocalUser "ansible" -Password $Password -FullName "Ansible Admin" -Description "Ansible administratoin account"
-    Add-LocalGroupMember -Group "Administrators" -Member "ansible"
+        $UserName = Read-Host -Prompt 'Write username for Ansible account: '
+        $Password = Read-Host -Prompt 'Write password for Ansible account: ' -AsSecureString 
+        New-LocalUser $UserName -Password $Password -FullName "Ansible Admin" -Description "Ansible administratoin account"
+        Add-LocalGroupMember -Group "Administrators" -Member $UserName
+    }
 }
 
 #logic to see which part of the script is needed
