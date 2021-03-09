@@ -39,6 +39,22 @@ function Invoke-Part-Two {
     Write-Host "Installing WSL2 update"
     Start-Process "$home\Downloads\wsl_update_x64.msi" /passive
     wsl --set-default-version 2
+
+    #configure Ansible
+    $url = "https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1"
+    $file = "C:\Users\Jorge\Downloads\Upgrade-PowerShell.ps1"
+    (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+    &$file -Version 5.1
+
+    $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+    $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+
+    (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+    powershell.exe -ExecutionPolicy ByPass -File $file
+
+    $Password = Read-Host -Prompt 'Write password for Ansible account: ' -AsSecureString 
+    New-LocalUser "ansible" -Password $Password -FullName "Ansible Admin" -Description "Ansible administratoin account"
+    Add-LocalGroupMember -Group "Administrators" -Member "ansible"
 }
 
 #logic to see which part of the script is needed
