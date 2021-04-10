@@ -1,2 +1,2 @@
 # automation
- Automation scripts and configuration files for Terraform, Ansible, CloudFormation
+ Automation scripts with PowerShell, Python and Bash.
