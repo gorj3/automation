@@ -6,6 +6,12 @@ Scripts in Bash, Python and PowerShell.
 * Waits 5 minutes to decrypt the password
 * Returns DNS address, Admin and password
 
+**Resources_Audit.ps1**
+* Creates csv file with Name, type, resource group and location of each resource in the current subscription 
+* Example of report created with this data:
+* ![Report](https://raw.githubusercontent.com/gorj3/automation/main/readme_img/Resources_Audit_Report.PNG)
+
+
 **ubuntu_setup.py**
 * Updates and upgrades packages
 * Install selected software
