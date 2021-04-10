@@ -8,7 +8,7 @@ Scripts in Bash, Python and PowerShell.
 
 **Resources_Audit.ps1**
 * Creates csv file with Name, type, resource group and location of each resource in the current subscription 
-* Example of report created with this data:
+* Example of report created with this data and Power BI:
 ![Report](https://raw.githubusercontent.com/gorj3/automation/main/readme_img/Resources_Audit_Report.PNG)
 
 
